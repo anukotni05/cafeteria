@@ -42,13 +42,10 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        form textarea, form input, form button, form label {
-            display: block;
+        form textarea, form input, form select {
             width: 100%;
-            margin-bottom: 10px;
-        }
-        form textarea, form input {
             padding: 10px;
+            margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -73,7 +70,7 @@
     <div class="container">
         <div class="menu">
             <h2>Our Menu</h2>
-            		<div class="menu-item">Idly 						- 30rs</div>
+            <div class="menu-item">Idly 						- 30rs</div>
             		<div class="menu-item">Puri 						- 30rs</div>
             		<div class="menu-item">Punugu 						- 30rs</div>
             		<div class="menu-item">Bajji						- 30rs</div>
@@ -99,35 +96,48 @@
 			<div class="menu-item">Soft Drinks 					- 20rs</div>
 			<div class="menu-item">Dum biryani(only wednesday) 			- 150rs</div>
 			<div class="menu-item">Egg fry(curry) 					- 20rs</div>
-			<div class="menu-item">Omelette 					- 20rs</div>
-			
+			<div class="menu-item">Omelette - 20rs</div>
         </div>
         <form id="feedbackForm">
             <h2>Mention Your Issue</h2>
+            <label for="issueType">Select an Issue:</label>
+            <select id="issueType">
+                <option value="select issue">select issue</option>
+                <option value="Hygiene Issues">Hygiene Issues</option>
+                <option value="Late Service">Late Service</option>
+                <option value="Food Quality">Food Quality</option>
+                <option value="Staff Behavior">Staff Behavior</option>
+                <option value="Overpricing">Overpricing</option>
+                <option value="Other">Other (Mention Below)</option>
+            </select>
+
             <textarea id="issue" rows="5" placeholder="Describe your issue here..."></textarea>
             <input type="text" id="name" placeholder="Your Name (optional)">
-            <label for="photo">Attach a photo (optional):</label>
-            <input type="file" id="photo" accept="image/*" capture="environment">
+            <label for="imageUpload">Attach an Image (Optional):</label>
+            <input type="file" id="imageUpload" accept="image/*" capture="environment">
+
             <button type="submit">Submit Feedback</button>
         </form>
     </div>
+
     <script>
         const feedbackForm = document.getElementById("feedbackForm");
 
         feedbackForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
+            const issueType = document.getElementById("issueType").value;
             const issue = document.getElementById("issue").value.trim();
             const name = document.getElementById("name").value.trim();
-            const photo = document.getElementById("photo").files[0];
+            const image = document.getElementById("imageUpload").files[0];
 
-            if (issue === "") {
-                alert("Please mention your issue before submitting.");
+            if (issue === "" && issueType === "Other") {
+                alert("Please describe your issue before submitting.");
             } else {
-                let message = Thank you ${name || "Anonymous"} for your feedback!\n\nIssue: ${issue};
-                if (photo) {
-                    message += \nPhoto attached: ${photo.name};
-                }
+                let message = `Thank you ${name || "Anonymous"} for your feedback!\n\nIssue Type: ${issueType}`;
+                if (issue) message += `\nDetails: ${issue}`;
+                if (image) message += `\nAttached Image: ${image.name}`;
+
                 alert(message);
                 feedbackForm.reset();
             }
@@ -135,3 +145,4 @@
     </script>
 </body>
 </html>
+			

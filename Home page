@@ -17,7 +17,7 @@
             text-align: center;
             color: white;
         }
-         .overlay {
+        .overlay {
             background-color: rgba(0, 0, 0, 0.6);
             position: absolute;
             width: 100%;
